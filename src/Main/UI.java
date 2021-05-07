@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
         LostSouls lostsouls;
 
         public UI(int width, int height, String name){
-            lostsouls = new LostSouls();
             frame = new JFrame(name);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
@@ -29,4 +28,8 @@ import java.awt.event.KeyListener;
         public void redraw(){
             canvas.redisplay();
         }
+
+        public void clear(){canvas.clear();}
+
+
 }

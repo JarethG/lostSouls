@@ -8,7 +8,6 @@ import java.awt.event.KeyListener;
 
         JFrame frame;
         Canvas canvas;
-        LostSouls lostsouls;
 
         public UI(int width, int height, String name){
             frame = new JFrame(name);
@@ -18,6 +17,8 @@ import java.awt.event.KeyListener;
             canvas = new Canvas(600,600);
             frame.add(canvas);
             frame.pack();
+
+
         }
 
         public void setKeyListener(KeyListener keyListener){

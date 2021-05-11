@@ -17,9 +17,10 @@ public class DummySquareGame {
     int movementX=0;
     int movementY=0;
     public DummySquareGame(){
-//        GUI = new UI(600,600,"LostSouls");
-//        graphics = GUI.canvas.getBackingGraphics();
-//        rec = new Rectangle(100,100,100,100);
+        GUI = new UI(600,600,"LostSouls");
+        graphics = GUI.canvas.getBackingGraphics();
+        rec = new Rectangle(100,100,100,100);
+        setKeys();
         mainLoop();
     }
 
@@ -55,7 +56,51 @@ public class DummySquareGame {
         rec.translate(movementX,movementY);
     }
 
+    public void setKeys() {
+        KeyListener keyListener = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_RIGHT:
+                       movementX=speed;
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        movementX=-speed;
+                        break;
+                    case KeyEvent.VK_UP:
+                        movementY=-speed;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        movementY=speed;
+                        break;
+                }
+            }
 
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_RIGHT:
+                        if(movementX == speed)
+                        movementX=0;
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        if(movementX == -speed)
+                        movementX=0;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        if(movementY == speed)
+                            movementY=0;
+                        break;
+                    case KeyEvent.VK_UP:
+                        if(movementY == -speed)
+                            movementY=0;
+                        break;
+                }
+            }
+        };
+        GUI.setKeyListener(keyListener);
+    }
 
 
     public static final ScheduledThreadPoolExecutor pool = new ScheduledThreadPoolExecutor(1);

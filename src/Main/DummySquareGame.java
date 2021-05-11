@@ -13,42 +13,49 @@ public class DummySquareGame {
     UI GUI;
     Graphics2D graphics;
     Rectangle rec;
+    int speed = 10;
+    int movementX=0;
+    int movementY=0;
     public DummySquareGame(){
 //        GUI = new UI(600,600,"LostSouls");
 //        graphics = GUI.canvas.getBackingGraphics();
 //        rec = new Rectangle(100,100,100,100);
-//        setKeys();
-        rep2();
+        mainLoop();
     }
 
-    public void move(int x){
-        rec.translate(x,0);
+    public void mainLoop(){
+        pool.schedule(()->{
+            long frameTime = 1000/24;
+            System.out.println("running");
+            long dt = 0;
+            while(true){
+                dt = System.currentTimeMillis();
+                update();
+                render();
+                dt = System.currentTimeMillis()-dt;
+                if(dt<frameTime){
+                    Thread.sleep(frameTime-dt);
+                } else {
+                    System.out.println("frame rate exceeded");
+                }
+            }},500,TimeUnit.MILLISECONDS);
+    }
+
+    public void update(){
+        move();
+    }
+
+    public void render(){
         GUI.clear();
         graphics.draw(rec);
         GUI.redraw();
     }
 
-    public void setKeys() {
-        KeyListener keyListener = new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_RIGHT:
-                        move(5);
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        move(-5);
-                        break;
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                super.keyReleased(e);
-            }
-        };
-        GUI.setKeyListener(keyListener);
+    public void move(){
+        rec.translate(movementX,movementY);
     }
+
+
 
 
     public static final ScheduledThreadPoolExecutor pool = new ScheduledThreadPoolExecutor(1);

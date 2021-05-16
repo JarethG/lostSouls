@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
+import Assets.Map;
+import Assets.Screen;
 import Graphics.MapLoader2D;
 
 
@@ -13,7 +15,7 @@ public class LostSouls implements Game {
 
     UI GUI;
     MapLoader2D mapLoader2D = new MapLoader2D();
-    BufferedImage[][] images;
+    Screen screen;
     int dx = 0;
     int dy = 0;
     int posX = 0;
@@ -25,7 +27,8 @@ public class LostSouls implements Game {
 
     public LostSouls (){
         GUI = new UI(600,600,"LostSouls");
-        images = mapLoader2D.loadDummyImages(20);
+        screen = new Screen();
+        screen.setMap(new Map(mapLoader2D.loadDummyMap(20)));
         setKeys();
         GUI.start(this);
 
@@ -33,16 +36,12 @@ public class LostSouls implements Game {
 
     @Override
     public void update() {
-        posX+=dx;posY+=dy;
+        screen.update(dx,dy);
     }
 
     @Override
     public void render(Graphics2D graphics) {
-        for (int y = 0; y < images.length; y++) {
-            for (int x = 0; x < images.length; x++) {
-                graphics.drawImage(images[x][y],400+posX + x * 50 - y * 50, 50+posY + 25 * x + y * 25,null);
-            }
-        }
+        screen.draw(graphics);
     }
 
     public void setKeys() {

@@ -20,6 +20,16 @@ public class MapLoader2D {
         return null;
     }
 
+    public Tile[][] loadDummyMap(int size){
+        BufferedImage[][] images = loadDummyImages(size);
+        Tile[][] tiles = new Tile[size][size];
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                tiles[i][j] = new Tile(images[i][j]);
+            }
+        }
+        return tiles;
+    }
     public BufferedImage[][] loadDummyImages(int size){
         BufferedImage[][] imageArray = new BufferedImage[size][size];
         List<BufferedImage> images = tileImages.values().stream().toList();

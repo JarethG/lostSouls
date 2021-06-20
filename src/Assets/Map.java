@@ -24,7 +24,8 @@ public class Map {
     public void draw(Graphics2D graphics,Point offset){
         for (int y = 0; y <  viewSection.length; y++) {
             for (int x = 0; x < viewSection.length; x++) {
-                graphics.drawImage(viewSection[x][y].image,400+offset.x + x * 50 - y * 50, 50+offset.y + 25 * x + y * 25,null);
+                graphics.drawImage(viewSection[x][y].image,offset.x-32 + x * 32 - y * 32, offset.y + 16 * x + y * 16,null);
+//                graphics.drawRect(offset.x + x * 32 - y * 32, offset.y + 16 * x + y * 16,64,32);
             }
         }
     }

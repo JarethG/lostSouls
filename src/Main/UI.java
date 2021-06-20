@@ -3,6 +3,7 @@ package Main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -17,7 +18,7 @@ public class UI {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
 
-            canvas = new Canvas(600,600);
+            canvas = new Canvas(width,height);
             frame.add(canvas);
             frame.pack();
         }
@@ -51,6 +52,11 @@ public class UI {
         public void setKeyListener(KeyListener keyListener){
             canvas.requestFocus();
             canvas.addKeyListener(keyListener);
+        }
+
+        public void setMouseListener(MouseAdapter mouseAdapter){
+            canvas.requestFocus();
+            canvas.addMouseListener(mouseAdapter);
         }
 
         public void redraw(){

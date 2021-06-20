@@ -3,6 +3,7 @@ package Graphics;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,6 +27,24 @@ public class ImageLoader {
             }
         }catch(Exception e){}
         return images;
+    }
+
+    public BufferedImage[] loadSprite(int size, int width, int height, String path) {
+
+        BufferedImage[] sprite = new BufferedImage[size];
+
+        try {
+            BufferedImage spriteSheet = ImageIO.read(new File(path));
+            for(int i = 0; i < size; i++) {
+                sprite[i] = spriteSheet.getSubimage(i*width,0,width,height);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return sprite;
     }
 
     public List<Path> findByFileExtension(Path path, String fileExtension){

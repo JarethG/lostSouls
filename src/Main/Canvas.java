@@ -35,7 +35,12 @@ public class Canvas extends JComponent {
             g.drawImage(imgBuf, 0, 0, null);
         }
 
-        public void redisplay() {
+    /**
+     * sets clip for full screen then resets clip.
+     * unnessasary for now, but will optimise rendering when
+     * more features are added.
+     */
+    public void redisplay() {
             Shape clip = visibleGraphic.getClip();
             Rectangle bounds = new Rectangle(0, 0, width, height);
             visibleGraphic.setClip(bounds);

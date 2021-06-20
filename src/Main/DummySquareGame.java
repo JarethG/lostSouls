@@ -4,8 +4,10 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import Graphics.ImageLoader;
 
 public class DummySquareGame {
     UI GUI;
@@ -14,12 +16,22 @@ public class DummySquareGame {
     int speed = 10;
     int movementX=0;
     int movementY=0;
+    int x = 100;
+    int y = 100;
     public static final ScheduledThreadPoolExecutor pool = new ScheduledThreadPoolExecutor(1);
     boolean running = true;
+    BufferedImage[] sprite;
+    double frame = 0;
+
+    public static void main(String[] args){
+        new DummySquareGame();
+    }
     public DummySquareGame(){
         GUI = new UI(600,600,"LostSouls");
         graphics = GUI.canvas.getBackingGraphics();
-        rec = new Rectangle(100,100,100,100);
+        ImageLoader il = new ImageLoader();
+        sprite = il.loadSprite(7,64,64,"./src/Resources/Sprites/Slime.png");
+//        rec = new Rectangle(100,100,100,100);
         setKeys();
         mainLoop();
     }
@@ -50,16 +62,23 @@ public class DummySquareGame {
 
     public void update(){
         move();
+        frame +=.3;
+        if(frame > 6)
+            frame = 0;
+
     }
 
     public void render(){
         GUI.clear();
-        graphics.draw(rec);
+        graphics.drawImage(sprite[(int) frame],x,y,null);
+//        graphics.draw(rec);
         GUI.redraw();
     }
 
     public void move(){
-        rec.translate(movementX,movementY);
+        x +=movementX;
+        y +=movementY;
+//        rec.translate(movementX,movementY);
     }
 
     public void setKeys() {

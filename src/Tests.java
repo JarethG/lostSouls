@@ -1,6 +1,8 @@
-import org.junit.Test;
+import Main.UI;
+import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;

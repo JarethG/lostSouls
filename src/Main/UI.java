@@ -8,8 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 public class UI {
 
-        JFrame frame;
-        Canvas canvas;
+        private JFrame frame;
+        public Canvas canvas;
     public static final ScheduledThreadPoolExecutor pool = new ScheduledThreadPoolExecutor(1);
 
         public UI(int width, int height, String name){

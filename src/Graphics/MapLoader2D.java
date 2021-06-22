@@ -22,22 +22,24 @@ public class MapLoader2D {
 
     public Map loadEmptyMap(int size){
         Tile[][] tiles = new Tile[size][size];
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < size; j++){
-                tiles[i][j] = new Tile(tileImages.get("empty"));
+        for(int x = 0; x < size; x++){
+            for(int y = 0; y < size; y++){
+                tiles[x][y] = new Tile(tileImages.get("empty"),(x - y) * 32,(x + y) * 16,64,32);
             }
         }
+        centre(tiles);
         return new Map(tiles);
     }
 
     public Tile[][] loadDummyMap(int size){
         BufferedImage[][] images = loadDummyImages(size);
         Tile[][] tiles = new Tile[size][size];
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < size; j++){
-                tiles[i][j] = new Tile(images[i][j]);
+        for(int x = 0; x < size; x++){
+            for(int y = 0; y < size; y++){
+                tiles[x][y] = new Tile(tileImages.get("empty"),(x - y) * 32,(x + y) * 16,64,32);
             }
         }
+        centre(tiles);
         return tiles;
     }
     public BufferedImage[][] loadDummyImages(int size){
@@ -50,5 +52,13 @@ public class MapLoader2D {
             }
         }
         return imageArray;
+    }
+
+    public void centre(Tile[][] tiles){
+        for(int x = 0; x < tiles.length; x++){
+            for(int y = 0; y < tiles.length; y++){
+                tiles[x][y].move(300,50);
+            }
+        }
     }
 }

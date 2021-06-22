@@ -3,9 +3,13 @@ package Main;
 import Assets.Map;
 import Assets.Tile;
 import Graphics.MapLoader2D;
+import Graphics.ImageLoader;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Set;
 
 public class MapMaker implements Game {
@@ -15,16 +19,20 @@ public class MapMaker implements Game {
     int size = 10;
     int ox = 200;
     int oy = 50;
+    HashMap<String, BufferedImage> tileImages;
+
+
 
     public static void main(String[] args){
         new MapMaker();
     }
 
     MapMaker(){
-        GUI   = new UI(500,500,"MapMaker");
+        GUI   = new UI(700,700,"MapMaker");
         setMouseListener();
         setKeyListener();
         MapLoader2D loader = new MapLoader2D();
+        tileImages = new ImageLoader().loadImages("./src/Resources/Tiles");
 
         map = loader.loadEmptyMap(10);
         GUI.start(this);
@@ -50,7 +58,7 @@ public class MapMaker implements Game {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                setTile(e.getX(),e.getY());
+                setTile(e);
             }
 
             @Override
@@ -83,6 +91,18 @@ public class MapMaker implements Game {
         int fx = ((ex-ox)+2*(ey-oy))/64;
         int fy = (2*(ey-oy) - (ex-ox))/64;
         System.out.println(fx + " | " + fy);
+    }
+
+    private void setTile(MouseEvent e){
+        Tile[][] temp = map.getTiles();
+        Arrays.stream(temp).flatMap(t -> Arrays.stream(t)).forEach(t-> {if(t.isClicked(e.getX(),e.getY()) ) replace(t);});
+
+
+    }
+
+    private Tile replace(Tile old){
+        old.setImage(tileImages.get("water"));
+        return old;
     }
 
     private void setTiles(Set<Integer> x, Set<Integer> y){

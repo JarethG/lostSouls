@@ -81,7 +81,7 @@ public class MapMaker implements Game {
             public void keyReleased(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_S -> parser.saveMap(map);
-//                    case KeyEvent.VK_G -> gridOn = !gridOn;
+                    case KeyEvent.VK_L -> parser.loadMap("");
                 }
             }
         };

@@ -5,6 +5,7 @@ import Assets.Tile;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,23 @@ public class MapParser {
     }
 
     public Map loadMap(String pathName){
+        System.out.println("loading map...");
+        Tile[][] tiles;
+        InputStream input = MapParser.class.getResourceAsStream("../Resources/Maps/new.csv");
+        BufferedReader csvReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
+        String[][] mapIds = csvReader.lines().map(line-> line.split(",")).toArray(size -> new String[size][size]);
+
+        for(String[] x : mapIds){
+            for (String s : x){
+                System.out.print(s);
+            }
+            System.out.println();
+        }
+
+        System.out.println("map is loaded!");
         return null;
+
+
     }
 
     public void saveMap(Map map) {
@@ -54,7 +71,7 @@ public class MapParser {
         Tile[][] tiles = new Tile[size][size];
         for(int x = 0; x < size; x++){
             for(int y = 0; y < size; y++){
-                tiles[x][y] = new Tile(tileImages.get("empty"),(x - y) * 32,(x + y) * 16,64,32);
+                tiles[x][y] = new Tile(tileImages.get("empty"),(x - y) * 32,(x + y) * 16,64,32,"empty");
             }
         }
         centre(tiles);
@@ -66,7 +83,7 @@ public class MapParser {
         Tile[][] tiles = new Tile[size][size];
         for(int x = 0; x < size; x++){
             for(int y = 0; y < size; y++){
-                tiles[x][y] = new Tile(tileImages.get("empty"),(x - y) * 32,(x + y) * 16,64,32);
+                tiles[x][y] = new Tile(images[x][y],(x - y) * 32,(x + y) * 16,64,32,"");
             }
         }
         centre(tiles);

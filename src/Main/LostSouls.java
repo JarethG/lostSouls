@@ -4,17 +4,16 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 
 import Assets.Map;
 import Assets.Screen;
-import Graphics.MapLoader2D;
+import Graphics.MapParser;
 
 
 public class LostSouls implements Game {
 
     UI GUI;
-    MapLoader2D mapLoader2D = new MapLoader2D();
+    MapParser mapParser = new MapParser();
     Screen screen;
     int dx = 0;
     int dy = 0;
@@ -28,7 +27,7 @@ public class LostSouls implements Game {
     public LostSouls (){
         GUI = new UI(600,600,"LostSouls");
         screen = new Screen();
-        screen.setMap(new Map(mapLoader2D.loadDummyMap(20)));
+        screen.setMap(new Map(mapParser.loadDummyMap(20)));
         setKeys();
         GUI.start(this);
 

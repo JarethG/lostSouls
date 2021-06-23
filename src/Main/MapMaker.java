@@ -2,7 +2,7 @@ package Main;
 
 import Assets.Map;
 import Assets.Tile;
-import Graphics.MapLoader2D;
+import Graphics.MapParser;
 import Graphics.ImageLoader;
 
 import java.awt.*;
@@ -20,6 +20,7 @@ public class MapMaker implements Game {
     int ox = 200;
     int oy = 50;
     HashMap<String, BufferedImage> tileImages;
+    MapParser parser;
 
 
 
@@ -31,10 +32,10 @@ public class MapMaker implements Game {
         GUI   = new UI(700,700,"MapMaker");
         setMouseListener();
         setKeyListener();
-        MapLoader2D loader = new MapLoader2D();
+        parser = new MapParser();
         tileImages = new ImageLoader().loadImages("./src/Resources/Tiles");
 
-        map = loader.loadEmptyMap(10);
+        map = parser.loadEmptyMap(10);
         GUI.start(this);
     }
 
@@ -79,7 +80,7 @@ public class MapMaker implements Game {
             @Override
             public void keyReleased(KeyEvent e) {
                 switch (e.getKeyCode()) {
-//                    case KeyEvent.VK_F -> frameOn = !frameOn;
+                    case KeyEvent.VK_S -> parser.saveMap(map);
 //                    case KeyEvent.VK_G -> gridOn = !gridOn;
                 }
             }

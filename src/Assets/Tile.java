@@ -33,4 +33,9 @@ public class Tile extends GameObject{
     public void setImage(BufferedImage i){
         this.image = i;
     }
+
+    public String getId(){
+//        return id;
+        return "X";
+    }
 }

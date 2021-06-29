@@ -22,22 +22,14 @@ public class MapParser {
 
     public Map loadMap(String pathName){
         System.out.println("loading map...");
-        Tile[][] tiles;
+
         InputStream input = MapParser.class.getResourceAsStream("../Resources/Maps/new.csv");
         BufferedReader csvReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
         String[][] mapIds = csvReader.lines().map(line-> line.split(",")).toArray(size -> new String[size][size]);
-
-        for(String[] x : mapIds){
-            for (String s : x){
-                System.out.print(s);
-            }
-            System.out.println();
-        }
-
+        Tile[][] tiles = Arrays.stream(mapIds).flatMap(array -> Arrays.stream(array)).map(id -> new Tile(id)).toArray(size -> new Tile[size][size]);
+        printArray(mapIds);
         System.out.println("map is loaded!");
-        return null;
-
-
+        return new Map(tiles);
     }
 
     public void saveMap(Map map) {
@@ -106,6 +98,15 @@ public class MapParser {
             for(int y = 0; y < tiles.length; y++){
                 tiles[x][y].move(300,50);
             }
+        }
+    }
+
+    public void printArray(String[][] array){
+        for(String[] x : array){
+            for (String s : x){
+                System.out.print(s);
+            }
+            System.out.println();
         }
     }
 }

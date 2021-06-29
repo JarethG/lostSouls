@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class Tile extends GameObject{
     Polygon boundary;
+    String name;
 
     public Tile(BufferedImage image,int x, int y,int width, int height, String id) {
         this.image = image;
@@ -16,6 +17,10 @@ public class Tile extends GameObject{
         int[] yPoints = new int[]{0,height/2,height,height/2};
         this.id = id;
         boundary = new Polygon(xPoints,yPoints,4);
+    }
+
+    public Tile(String name){
+        this.name = name;
     }
 
     public boolean isClicked(int ex, int ey) {

@@ -6,10 +6,7 @@ import Assets.Tile;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MapParser {
@@ -23,13 +20,22 @@ public class MapParser {
     public Map loadMap(String pathName){
         System.out.println("loading map...");
 
-        InputStream input = MapParser.class.getResourceAsStream("../Resources/Maps/new.csv");
+        InputStream input = MapParser.class.getResourceAsStream(pathName);
         BufferedReader csvReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
+//        String[][] mapIds = csvReader.lines().map(line-> line.split(",")).toArray(size -> new String[size][size]);
         String[][] mapIds = csvReader.lines().map(line-> line.split(",")).toArray(size -> new String[size][size]);
-        Tile[][] tiles = Arrays.stream(mapIds).flatMap(array -> Arrays.stream(array)).map(id -> new Tile(id)).toArray(size -> new Tile[size][size]);
+        ArrayList<Tile[]>tiles = new ArrayList<>();
+        for(String[] array : mapIds){
+            tiles.add(Arrays.stream(array).map(id -> new Tile(id)).toArray(Tile[]::new));
+        }
+        String[] unique =  Arrays.stream(mapIds).flatMap(array -> Arrays.stream(array)).distinct().toArray(String[]::new);
+        HashMap<String,BufferedImage> mapAssets = new HashMap<>();
+        for(String s : unique){
+            mapAssets.put(s,tileImages.get(s));
+        }
         printArray(mapIds);
         System.out.println("map is loaded!");
-        return new Map(tiles);
+        return new Map(tiles.toArray(Tile[][]::new),mapAssets);
     }
 
     public void saveMap(Map map) {
@@ -50,9 +56,11 @@ public class MapParser {
     }
 
     public String convertToCSV(Tile[] data) {
-        return  Arrays.stream(data)
+        String s =
+        Arrays.stream(data)
                 .map(t -> t.getId())
                 .collect(Collectors.joining(","));
+        return s;
     }
 
     public void saveAsMap(String pathName){
@@ -67,10 +75,13 @@ public class MapParser {
             }
         }
         centre(tiles);
-        return new Map(tiles);
+
+        return new Map(tiles, new HashMap<>() {{
+            put("s", tileImages.get("empty"));
+        }});
     }
 
-    public Tile[][] loadDummyMap(int size){
+    public Map loadDummyMap(int size){
         BufferedImage[][] images = loadDummyImages(size);
         Tile[][] tiles = new Tile[size][size];
         for(int x = 0; x < size; x++){
@@ -79,7 +90,7 @@ public class MapParser {
             }
         }
         centre(tiles);
-        return tiles;
+        return new Map(tiles,tileImages);
     }
     public BufferedImage[][] loadDummyImages(int size){
         BufferedImage[][] imageArray = new BufferedImage[size][size];

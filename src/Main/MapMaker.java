@@ -35,7 +35,7 @@ public class MapMaker implements Game {
         parser = new MapParser();
         tileImages = new ImageLoader().loadImages("./src/Resources/Tiles");
 
-        map = parser.loadEmptyMap(10);
+        map = parser.loadMap("../Resources/Maps/new.csv");
         GUI.start(this);
     }
 
@@ -59,7 +59,7 @@ public class MapMaker implements Game {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                setTile(e);
+                setTile(e.getX(),e.getY());
             }
 
             @Override

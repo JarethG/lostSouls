@@ -42,6 +42,6 @@ public class Tile extends GameObject{
 
     public String getId(){
 //        return id;
-        return "X";
+        return "empty";
     }
 }

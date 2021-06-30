@@ -27,7 +27,7 @@ public class LostSouls implements Game {
     public LostSouls (){
         GUI = new UI(600,600,"LostSouls");
         screen = new Screen();
-        screen.setMap(new Map(mapParser.loadDummyMap(20)));
+        screen.setMap(mapParser.loadDummyMap(20));
         setKeys();
         GUI.start(this);
 
